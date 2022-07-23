@@ -1,0 +1,154 @@
+#root {
+  /* max-width: 1280px; */
+  /* margin: 0 auto; */
+  /* padding: 2rem; */
+  /* text-align: center; */
+  color: rgb(67, 65, 98);
+}
+
+.upload-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  align-items: center;
+  text-align: center;
+}
+
+.upload {
+  display: flex;
+  /* background-color: #eee; */
+  width: 80vw;
+  height: 80vh;
+  align-items: center;
+  justify-content: center;
+  border: 10px dashed #eee;
+  font-size: 30px;
+  font-weight: 200;
+  margin: 0 auto;
+}
+
+main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.content {
+  flex: 1;
+}
+
+.tab {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.tab li {
+  padding: 10px 20px;
+  border-right: 1px solid #eee;
+  cursor: pointer;
+}
+
+.tab li.active {
+  color: rgb(33, 103, 255);
+  font-weight: 500;
+}
+
+.sidebar {
+  display: inline-flex;
+  flex-direction: column;
+  /* background-color: #eee; */
+  padding: 20px;
+  height: 100vh;
+  border-right: 1px solid #eee;
+  align-items: center;
+}
+
+.sidebar-title {
+  margin-bottom: 30px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.font-names {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  width: 240px;
+}
+
+.font-names li {
+  display: flex;
+  width: 100%;
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  /* white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden; */
+}
+
+.font-names__label {
+  /* background-color: #eee; */
+  display: inline-block;
+  padding: 0px 5px;
+  border-radius: 10px;
+  margin-right: 5px;
+  width: 110px;
+  text-align: right;
+  flex: 0 0 110px;
+  font-weight: 200;
+  /* color: #666; */
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper {
+  overflow: auto;
+}
+
+.unicode-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  background-color: #eee;
+  grid-gap: 1px;
+  /* grid-template-rows: ; */
+}
+
+.unicode-list li::before {
+  content: "";
+  padding-bottom: 100%;
+  display: block;
+}
+
+.unicode-list li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  display: flex;
+}
+
+.unicode-cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.unicode-cover > span:first-child,
+.unicode-cover > span:nth-child(2) {
+  font-size: 12px;
+  color: #999;
+}
