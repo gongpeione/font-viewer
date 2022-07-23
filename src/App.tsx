@@ -1,4 +1,4 @@
-import { FormEvent, FormEventHandler, useState } from 'react';
+import { FormEvent, FormEventHandler, useEffect, useMemo, useState } from 'react';
 import { FileUploader } from "react-drag-drop-files";
 // @ts-ignore
 import font from 'fonteditor-core/lib/ttf/font';
@@ -29,6 +29,8 @@ function App() {
   const [file, setFile] = useState<File | null>(null);
   const [ttf, setTTF] = useState<any>(null);
   const [tab, setTab] = useState(defaultTab);
+  const [cmapPerPage, setCmapPerPage] = useState(50);
+  const [cmapPage, setCmapPage] = useState(0);
   const [searchCMAP, setSearchCMAP] = useState<string | number>('');
 
   const handleChange = async (file: File) => {
@@ -75,6 +77,21 @@ function App() {
     }
   }
 
+  const cmapListToShow = useMemo(() => {
+    return Object.keys(cmap || {}).filter(c => {
+      if (!searchCMAP) return true;
+      if (typeof searchCMAP === 'number') {
+        return +c === searchCMAP || +cmap[c] === searchCMAP;
+      } else {
+        return searchCMAP.includes(String.fromCharCode(+c));
+      }
+    })
+  }, [cmap, searchCMAP]);
+
+  useEffect(() => {
+    setCmapPage(0);
+  }, [searchCMAP]);
+
   return (
     <div className="App">
       {!ttf ? (
@@ -119,14 +136,7 @@ function App() {
                     <input type="text" placeholder='Search Code' onInput={onSearchCMAP} />
                   </div>
                   <ol className='unicode-list'>
-                    {Object.keys(cmap).filter(c => {
-                      if (!searchCMAP) return true;
-                      if (typeof searchCMAP === 'number') {
-                        return +c === searchCMAP || +cmap[c] === searchCMAP;
-                      } else {
-                        return searchCMAP.includes(String.fromCharCode(+c));
-                      }
-                    }).map(c => (
+                    {cmapListToShow.slice(cmapPage * cmapPerPage, (cmapPage + 1) * cmapPerPage).map(c => (
                       <li>
                         <div className="unicode-cover">
                           <span>code: {c}</span>
@@ -136,6 +146,13 @@ function App() {
                       </li>
                     ))}
                   </ol>
+                  {cmapListToShow.length > cmapPerPage ? <ol className="pagination">
+                    <li onClick={() => setCmapPage(0)}>First Page</li>
+                    <li onClick={() => cmapPage > 0 && setCmapPage(cmapPage - 1)}>Prev</li>
+                    <li className='curpage'>{cmapPage + 1}</li>
+                    <li onClick={() => cmapPage < Math.floor(cmapListToShow.length / cmapPerPage) && setCmapPage(cmapPage + 1)}>Next</li>
+                    <li onClick={() => setCmapPage(Math.floor(cmapListToShow.length / cmapPerPage))}>Last Page</li>
+                  </ol> : ''}
                 </>
               ): ''}
 
