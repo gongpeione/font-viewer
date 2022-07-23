@@ -51,11 +51,25 @@ main {
   padding: 10px 20px;
   border-right: 1px solid #eee;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .tab li.active {
   color: rgb(33, 103, 255);
   font-weight: 500;
+}
+
+.tab-icon {
+  display: inline-flex;
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+}
+
+.tab-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 .sidebar {
@@ -152,3 +166,41 @@ main {
   font-size: 12px;
   color: #999;
 }
+
+.os2-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  background-color: #eee;
+  grid-gap: 1px;
+  /* grid-template-rows: ; */
+}
+
+.os2-list li::before {
+  content: "";
+  padding-bottom: 100%;
+  display: block;
+}
+
+.os2-list li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  display: flex;
+}
+
+.os2-cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.os2-cover > span:first-child {
+  font-size: 12px;
+  color: #999;
+}
+
