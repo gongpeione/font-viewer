@@ -78,6 +78,7 @@ main {
   /* background-color: #eee; */
   padding: 20px;
   height: 100vh;
+  overflow: auto;
   border-right: 1px solid #eee;
   align-items: center;
 }
@@ -102,6 +103,7 @@ main {
   margin-bottom: 5px;
   font-size: 12px;
   font-weight: 500;
+  white-space: w;
   /* white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden; */
@@ -232,6 +234,7 @@ main {
   border: 1px solid #eee;
   margin: 0 5px;
   cursor: pointer;
+  user-select: none;
 }
 
 .pagination li.curpage {

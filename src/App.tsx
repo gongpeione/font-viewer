@@ -4,6 +4,7 @@ import { FileUploader } from "react-drag-drop-files";
 import font from 'fonteditor-core/lib/ttf/font';
 // import reactLogo from './assets/react.svg'
 import './App.css';
+// import r from './r.ttf';
 
 const fileTypes = ["ttf"];
 const defaultTab = {
@@ -45,8 +46,10 @@ function App() {
 
     const css = `
       @font-face {
-        font-family: "${ttf.data.name.postScriptName}";
-        src: url(${url});
+        font-family: "${ttf.data.name.fontFamily}";
+        src: url(${url}) format("truetype");
+        font-weight: normal;
+        font-style: normal;
       }
     `;
     const style = document.createElement('style');
@@ -98,6 +101,20 @@ function App() {
       }
     })
   }, [cmap, searchCMAP]);
+
+  // useEffect(() => {
+  //   const css = `
+  //     @font-face {
+  //       font-family: "PH";
+  //       src: url(${r}) format("truetype");
+  //       font-weight: normal;
+  //       font-style: normal;
+  //     }
+  //   `;
+  //   const style = document.createElement('style');
+  //   style.innerHTML = css;
+  //   document.head.appendChild(style);
+  // }, []);
 
   useEffect(() => {
     setCmapPage(0);
@@ -152,7 +169,7 @@ function App() {
                         <div className="unicode-cover">
                           <span>code: {c}</span>
                           <span>glyph: {cmap[c]}</span>
-                          <span style={{ fontFamily: `"${fontNameObj.postScriptName}"` }}>{String.fromCharCode(+c)}</span>
+                          <span style={{ fontFamily: `'${fontNameObj.fontFamily}'` }}>{String.fromCharCode(+c)}</span>
                         </div>
                       </li>
                     ))}
@@ -160,7 +177,7 @@ function App() {
                   {cmapListToShow.length > cmapPerPage ? <ol className="pagination">
                     <li onClick={() => setCmapPage(0)}>First Page</li>
                     <li onClick={() => cmapPage > 0 && setCmapPage(cmapPage - 1)}>Prev</li>
-                    <li className='curpage'>{cmapPage + 1}</li>
+                    <li className='curpage'>{cmapPage + 1}/{Math.floor(cmapListToShow.length / cmapPerPage) + 1}</li>
                     <li onClick={() => cmapPage < Math.floor(cmapListToShow.length / cmapPerPage) && setCmapPage(cmapPage + 1)}>Next</li>
                     <li onClick={() => setCmapPage(Math.floor(cmapListToShow.length / cmapPerPage))}>Last Page</li>
                   </ol> : ''}
