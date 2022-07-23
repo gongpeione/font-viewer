@@ -27,6 +27,7 @@ function App() {
   const [file, setFile] = useState<File | null>(null);
   const [ttf, setTTF] = useState(null);
   const [tab, setTab] = useState(defaultTab);
+  const [searchCMAP, setSearchCMAP] = useState('');
 
   const handleChange = async (file: File) => {
     const fontBuffer = await file.arrayBuffer();
@@ -60,6 +61,17 @@ function App() {
     setTab({
       ...tab
     });
+  }
+
+  const onSearchCMAP = (e: InputEvent) => {
+    console.log(e.target.value);
+    const val = e.target.value;
+
+    if (/\d+/.test(val)) {
+      setSearchCMAP(+val);
+    } else {
+      setSearchCMAP(val);
+    }
   }
 
   return (
@@ -101,17 +113,29 @@ function App() {
 
             <div className="content-wrapper">
               {tab.cmap.active ? (
-                <ol className='unicode-list'>
-                  {Object.keys(cmap).map(c => (
-                    <li>
-                      <div className="unicode-cover">
-                        <span>code: {c}</span>
-                        <span>target: {cmap[c]}</span>
-                        <span>{String.fromCharCode(c as Number)}</span>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
+                <>
+                  <div className="unicode-search">
+                    <input type="text" placeholder='Search Code' onInput={onSearchCMAP} />
+                  </div>
+                  <ol className='unicode-list'>
+                    {Object.keys(cmap).filter(c => {
+                      if (!searchCMAP) return true;
+                      if (typeof searchCMAP === 'number') {
+                        return +c === searchCMAP || +cmap[c] === searchCMAP;
+                      } else {
+                        return searchCMAP.includes(String.fromCharCode(c as Number));
+                      }
+                    }).map(c => (
+                      <li>
+                        <div className="unicode-cover">
+                          <span>code: {c}</span>
+                          <span>target: {cmap[c]}</span>
+                          <span>{String.fromCharCode(c as Number)}</span>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </>
               ): ''}
 
               {tab.os2.active ? (

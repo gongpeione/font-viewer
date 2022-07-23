@@ -137,6 +137,7 @@ main {
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   background-color: #eee;
   grid-gap: 1px;
+  border-bottom: 1px solid #eee;
   /* grid-template-rows: ; */
 }
 
@@ -167,6 +168,18 @@ main {
   color: #999;
 }
 
+.unicode-search {
+  border-bottom: 1px solid #eee;
+  display: flex;
+}
+
+.unicode-search input {
+  border: none;
+  width: 100%;
+  padding: 10px 10px;
+  outline: none;
+}
+
 .os2-list {
   list-style: none;
   padding: 0;
@@ -175,6 +188,7 @@ main {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   background-color: #eee;
   grid-gap: 1px;
+  border-bottom: 1px solid #eee;
   /* grid-template-rows: ; */
 }
 
