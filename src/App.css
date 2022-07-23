@@ -30,7 +30,9 @@
 main {
   width: 100vw;
   height: 100vh;
-  display: flex;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  overflow: hidden;
 }
 
 .content {
@@ -125,6 +127,7 @@ main {
 .content {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .content-wrapper {
@@ -240,4 +243,75 @@ main {
 .pagination li.curpage {
   border: none;
   cursor: default;
+}
+
+
+.subset-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  /* white-space: wrap;
+  width: 100%;
+  overflow: auto; */
+  /* display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  background-color: #eee;
+  grid-gap: 1px;
+  border-bottom: 1px solid #eee; */
+  /* grid-template-rows: ; */
+}
+
+/* .os2-list li::before {
+  content: "";
+  padding-bottom: 100%;
+  display: block;
+} */
+
+.subset-list li {
+  margin-bottom: 10px;
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  display: flex;
+  padding: 20px 0; */
+}
+
+.subset-title {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: stretch;
+}
+
+.subset-cover > span:first-child {
+  /* font-size: 12px;
+  color: #999; */
+}
+
+.subset-range {
+  display: block;
+  font-size: 12px;
+  /* border-bottom: 1px solid #eee; */
+  /* border-left: 5px solid #eee; */
+  /* margin-bottom: 10px; */
+  padding: 0 10px;
+}
+
+.subset-range > span {
+  display: inline-block;
+  background: #eee;
+  margin-right: 2px;
+  padding: 0 5px;
+  margin-bottom: 2px;
+}
+
+.subset-index {
+  /* background-color: #eee; */
+  /* border-right: 5px solid #eee; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  flex: 1 0 50px;
 }

@@ -4,6 +4,7 @@ import { FileUploader } from "react-drag-drop-files";
 import font from 'fonteditor-core/lib/ttf/font';
 // import reactLogo from './assets/react.svg'
 import './App.css';
+import range from './font-range.json';
 // import r from './r.ttf';
 
 const fileTypes = ["ttf"];
@@ -17,6 +18,11 @@ const defaultTab = {
     text: 'os/2',
     active: false,
     link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/os2'
+  },
+  subset: {
+    text: 'Subset',
+    active: false,
+    // link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/os2'
   }
 };
 
@@ -27,7 +33,7 @@ const icons = {
 };
 
 function App() {
-  const [file, setFile] = useState<File | null>(null);
+  // const [file, setFile] = useState<File | null>(null);
   const [ttf, setTTF] = useState<any>(null);
   const [tab, setTab] = useState(defaultTab);
   const [cmapPerPage, setCmapPerPage] = useState(50);
@@ -41,7 +47,7 @@ function App() {
       type: 'ttf'
     });
 
-    setFile(file);
+    // setFile(file);
     setTTF(ttf);
 
     const css = `
@@ -191,6 +197,22 @@ function App() {
                       <div className="os2-cover">
                         <span>{c}</span>
                         <span>{os2[c]}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              ): ''}
+
+              {tab.subset.active ? (
+                <ol className='subset-list'>
+                  {range.map((r, index) => (
+                    <li>
+                      <div className="subset-title">
+                        <div className="subset-index">{index}</div>
+                        <span className='subset-range'>{r.map(d => <span>{d}</span>)}</span>
+                      </div>
+                      <div className="subset-glyph">
+
                       </div>
                     </li>
                   ))}
