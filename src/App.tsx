@@ -24,8 +24,8 @@ const defaultTab = {
   subset: {
     text: 'Subset',
     active: false,
-    description: 'Font subset based on Google font unicode range'
-    // link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/os2'
+    description: 'Font subset based on Google font unicode range',
+    link: ''
   }
 };
 
