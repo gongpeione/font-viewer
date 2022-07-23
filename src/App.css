@@ -50,11 +50,30 @@ main {
 }
 
 .tab li {
+  /* position: relative; */
   padding: 10px 20px;
   border-right: 1px solid #eee;
   cursor: pointer;
   display: flex;
   align-items: center;
+}
+
+.tab li:hover {
+  font-weight: 500;
+}
+
+.tab li:hover::after {
+  content: attr(data-description);
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  /* white-space: nowrap; */
+  width: 300px;
+  color: #666;
+  background-color: #fff;
+  border: 1px solid #eee;
+  padding: 10px 20px;
+  font-weight: 200;
 }
 
 .tab li.active {
@@ -165,12 +184,18 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 20px;
 }
 
 .unicode-cover > span:first-child,
 .unicode-cover > span:nth-child(2) {
   font-size: 12px;
   color: #999;
+  line-height: 1.2;
+}
+
+.unicode-cover > span:nth-child(2) {
+  margin-bottom: 5px;;
 }
 
 .unicode-search {

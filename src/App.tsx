@@ -12,16 +12,19 @@ const defaultTab = {
   cmap: {
     text: 'cmap',
     active: true,
-    link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/cmap'
+    link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/cmap',
+    description: 'This table defines the mapping of character codes to the glyph index values used in the font. It may contain more than one subtable, in order to support more than one character encoding scheme.'
   },
   os2: {
     text: 'os/2',
     active: false,
-    link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/os2'
+    link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/os2',
+    description: 'The OS/2 table consists of a set of metrics and other data that are required in OpenType fonts.'
   },
   subset: {
     text: 'Subset',
     active: false,
+    description: 'Font subset based on Google font unicode range'
     // link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/os2'
   }
 };
@@ -156,7 +159,7 @@ function App() {
           <div className="content">
             <ul className="tab">
               {Object.keys(tab).map((t: any) => (
-                <li className={tab[t as TTab].active ? 'active' : ''} onClick={() => switchTab(t)}>
+                <li className={tab[t as TTab].active ? 'active' : ''} onClick={() => switchTab(t)} data-description={tab[t as TTab].description}>
                   <span>{tab[t as TTab].text.toUpperCase()}</span>
                   {tab[t as TTab].link ? <i className='tab-icon' onClick={(e) => openWindow(tab[t as TTab].link, e)} dangerouslySetInnerHTML={{ __html: icons.doc }}></i> : ''}
                 </li>
