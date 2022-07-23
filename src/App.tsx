@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, FormEventHandler, useState } from 'react';
 import { FileUploader } from "react-drag-drop-files";
 // @ts-ignore
 import font from 'fonteditor-core/lib/ttf/font';
@@ -19,15 +19,17 @@ const defaultTab = {
   }
 };
 
+type TTab = keyof typeof defaultTab;
+
 const icons = {
   doc: '<svg t="1658586064814" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3065" width="200" height="200"><path d="M664.132267 0H110.933333v1024h802.133334V248.9344L664.132267 0z m10.001066 58.2656L854.801067 238.933333H674.133333V58.2656zM145.066667 989.866667V34.133333h494.933333v238.933334h238.933333v716.8h-733.866666z" fill="" p-id="3066"></path><path d="M281.6 290.133333h153.6a17.066667 17.066667 0 1 0 0-34.133333h-153.6a17.066667 17.066667 0 1 0 0 34.133333zM571.733333 631.466667h-290.133333a17.066667 17.066667 0 1 0 0 34.133333h290.133333a17.066667 17.066667 0 1 0 0-34.133333zM742.4 512h-119.466667a17.066667 17.066667 0 1 0 0 34.133333h119.466667a17.066667 17.066667 0 1 0 0-34.133333zM281.6 426.666667h85.333333a17.066667 17.066667 0 1 0 0-34.133334h-85.333333a17.066667 17.066667 0 1 0 0 34.133334zM537.6 426.666667h119.466667a17.066667 17.066667 0 1 0 0-34.133334h-119.466667a17.066667 17.066667 0 1 0 0 34.133334zM435.2 409.6c0 4.437333 1.877333 8.874667 4.949333 12.117333 3.242667 3.072 7.68 4.949333 12.117334 4.949334 4.437333 0 8.874667-1.877333 12.117333-4.949334 3.072-3.242667 4.949333-7.68 4.949333-12.117333 0-4.4544-1.877333-8.891733-4.949333-12.117333-6.314667-6.314667-17.749333-6.314667-24.234667 0-3.072 3.2256-4.949333 7.662933-4.949333 12.117333zM366.933333 512a17.066667 17.066667 0 1 0 0 34.133333h170.666667a17.066667 17.066667 0 1 0 0-34.133333h-170.666667zM281.6 546.133333c4.437333 0 8.874667-1.877333 12.117333-4.949333 3.072-3.242667 4.949333-7.68 4.949334-12.117333 0-4.4544-1.877333-8.891733-4.949334-12.117334-6.314667-6.314667-17.92-6.314667-24.234666 0-3.072 3.2256-4.949333 7.492267-4.949334 12.117334 0 4.437333 1.877333 8.874667 4.949334 12.117333 3.242667 3.072 7.68 4.949333 12.117333 4.949333zM742.4 750.933333h-119.466667a17.066667 17.066667 0 1 0 0 34.133334h119.466667a17.066667 17.066667 0 1 0 0-34.133334zM537.6 750.933333h-170.666667a17.066667 17.066667 0 1 0 0 34.133334h170.666667a17.066667 17.066667 0 1 0 0-34.133334zM269.482667 755.882667a17.288533 17.288533 0 0 0 0 24.234666c3.242667 3.072 7.68 4.949333 12.117333 4.949334 4.608 0 8.874667-1.877333 12.117333-4.949334 3.072-3.242667 4.949333-7.68 4.949334-12.117333a16.8448 16.8448 0 0 0-4.949334-11.946667c-6.314667-6.485333-17.749333-6.485333-24.234666-0.170666zM730.282667 397.482667c-3.072 3.2256-4.949333 7.662933-4.949334 12.117333 0 4.437333 1.877333 8.874667 4.949334 12.117333 3.242667 3.072 7.68 4.949333 12.117333 4.949334 4.437333 0 8.874667-1.877333 12.117333-4.949334 3.242667-3.242667 4.949333-7.68 4.949334-12.117333 0-4.4544-1.706667-8.891733-4.949334-12.117333-6.485333-6.314667-17.749333-6.314667-24.234666 0zM669.184 660.650667c3.072-3.242667 4.949333-7.68 4.949333-12.117334 0-4.4544-1.877333-8.891733-4.949333-12.117333-6.485333-6.314667-17.92-6.314667-24.234667 0-3.072 3.2256-4.949333 7.662933-4.949333 12.117333 0 4.437333 1.877333 8.874667 4.949333 12.117334 3.242667 3.2256 7.509333 4.949333 12.117334 4.949333s8.874667-1.877333 12.117333-4.949333zM730.282667 636.416c-3.072 3.2256-4.949333 7.662933-4.949334 12.117333 0 4.437333 1.877333 8.874667 4.949334 12.117334 3.242667 3.072 7.509333 4.949333 12.117333 4.949333s8.874667-1.877333 12.117333-4.949333c3.072-3.242667 4.949333-7.68 4.949334-12.117334 0-4.4544-1.877333-8.891733-4.949334-12.117333-6.314667-6.314667-17.92-6.314667-24.234666 0z" fill="" p-id="3067"></path></svg>'
 };
 
 function App() {
   const [file, setFile] = useState<File | null>(null);
-  const [ttf, setTTF] = useState(null);
+  const [ttf, setTTF] = useState<any>(null);
   const [tab, setTab] = useState(defaultTab);
-  const [searchCMAP, setSearchCMAP] = useState('');
+  const [searchCMAP, setSearchCMAP] = useState<string | number>('');
 
   const handleChange = async (file: File) => {
     const fontBuffer = await file.arrayBuffer();
@@ -50,11 +52,11 @@ function App() {
   }
 
   const switchTab = (tabKey: string) => {
-    Object.keys(tab).forEach(t => {
+    Object.keys(tab).forEach((t) => {
       if (t === tabKey) {
-        tab[t].active = true;
+        tab[t as TTab].active = true;
       } else {
-        tab[t].active = false;
+        tab[t as TTab].active = false;
       }
     });
 
@@ -63,9 +65,8 @@ function App() {
     });
   }
 
-  const onSearchCMAP = (e: InputEvent) => {
-    console.log(e.target.value);
-    const val = e.target.value;
+  const onSearchCMAP = (e: FormEvent<HTMLInputElement>) => {
+    const val = (e.target as any).value;
 
     if (/\d+/.test(val)) {
       setSearchCMAP(+val);
@@ -104,9 +105,9 @@ function App() {
           <div className="content">
             <ul className="tab">
               {Object.keys(tab).map((t: any) => (
-                <li className={tab[t].active ? 'active' : ''} onClick={() => switchTab(t)}>
-                  <span>{tab[t].text.toUpperCase()}</span>
-                  {tab[t].link ? <i className='tab-icon' onClick={(e) => openWindow(tab[t].link, e)} dangerouslySetInnerHTML={{ __html: icons.doc }}></i> : ''}
+                <li className={tab[t as TTab].active ? 'active' : ''} onClick={() => switchTab(t)}>
+                  <span>{tab[t as TTab].text.toUpperCase()}</span>
+                  {tab[t as TTab].link ? <i className='tab-icon' onClick={(e) => openWindow(tab[t as TTab].link, e)} dangerouslySetInnerHTML={{ __html: icons.doc }}></i> : ''}
                 </li>
               ))}
             </ul>
@@ -123,14 +124,14 @@ function App() {
                       if (typeof searchCMAP === 'number') {
                         return +c === searchCMAP || +cmap[c] === searchCMAP;
                       } else {
-                        return searchCMAP.includes(String.fromCharCode(c as Number));
+                        return searchCMAP.includes(String.fromCharCode(+c));
                       }
                     }).map(c => (
                       <li>
                         <div className="unicode-cover">
                           <span>code: {c}</span>
                           <span>target: {cmap[c]}</span>
-                          <span>{String.fromCharCode(c as Number)}</span>
+                          <span>{String.fromCharCode(+c)}</span>
                         </div>
                       </li>
                     ))}
