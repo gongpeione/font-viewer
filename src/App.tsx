@@ -35,6 +35,7 @@ function App() {
 
   const handleChange = async (file: File) => {
     const fontBuffer = await file.arrayBuffer();
+    const url = URL.createObjectURL(file);
     let ttf = font.create(fontBuffer, {
       type: 'ttf'
     });
@@ -42,7 +43,17 @@ function App() {
     setFile(file);
     setTTF(ttf);
 
-    console.log({ttf});
+    const css = `
+      @font-face {
+        font-family: "${ttf.data.name.postScriptName}";
+        src: url(${url});
+      }
+    `;
+    const style = document.createElement('style');
+    style.innerHTML = css;
+    document.head.appendChild(style);
+
+    console.log(css, {ttf});
   };
 
   const { name: fontNameObj, glyf, cmap } = ttf?.data || {};
@@ -105,7 +116,7 @@ function App() {
       {ttf ? (
         <main>
           <div className="sidebar">
-            <div className="sidebar-title">Font Info</div>
+            <div className="sidebar-title">Names</div>
             <ul className='font-names'>
               {fontNameObj ? Object.keys(fontNameObj).map(name => {
                 return <li>
@@ -140,8 +151,8 @@ function App() {
                       <li>
                         <div className="unicode-cover">
                           <span>code: {c}</span>
-                          <span>target: {cmap[c]}</span>
-                          <span>{String.fromCharCode(+c)}</span>
+                          <span>glyph: {cmap[c]}</span>
+                          <span style={{ fontFamily: `"${fontNameObj.postScriptName}"` }}>{String.fromCharCode(+c)}</span>
                         </div>
                       </li>
                     ))}

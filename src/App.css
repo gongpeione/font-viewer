@@ -192,11 +192,11 @@ main {
   /* grid-template-rows: ; */
 }
 
-.os2-list li::before {
+/* .os2-list li::before {
   content: "";
   padding-bottom: 100%;
   display: block;
-}
+} */
 
 .os2-list li {
   display: flex;
@@ -204,6 +204,7 @@ main {
   justify-content: center;
   background-color: #fff;
   display: flex;
+  padding: 20px 0;
 }
 
 .os2-cover {
