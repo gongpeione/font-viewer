@@ -6,16 +6,18 @@ import font from 'fonteditor-core/lib/ttf/font';
 import './App.css';
 
 const fileTypes = ["ttf"];
+const defaultTab = {
+  unicode: {
+    text: 'cmap',
+    active: true,
+    link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/cmap'
+  }
+};
 
 function App() {
   const [file, setFile] = useState<File | null>(null);
   const [ttf, setTTF] = useState(null);
-  const [tab, setTab] = useState({
-    unicode: {
-      text: 'cmap',
-      active: true
-    }
-  });
+  const [tab, setTab] = useState(defaultTab);
 
   const handleChange = async (file: File) => {
     const fontBuffer = await file.arrayBuffer();
@@ -36,7 +38,7 @@ function App() {
       {!ttf ? (
         <div className="upload-wrapper">
           <FileUploader classes="upload" handleChange={handleChange} name="file" types={fileTypes}>
-            Drag and drop font file
+            Drag and drop .ttf
           </FileUploader>
         </div>
       ) : ''}
