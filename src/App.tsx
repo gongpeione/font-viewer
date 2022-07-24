@@ -33,18 +33,18 @@ const defaultTab = {
     link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/hhea',
     description: 'This table contains information for horizontal layout. The values in the minRightSidebearing, minLeftSideBearing and xMaxExtent should be computed using only glyphs that have contours. Glyphs with no contours should be ignored for the purposes of these calculations. All reserved areas must be set to 0.'
   },
+  glyph: {
+    text: 'Glyph',
+    active: false,
+    description: 'This table contains information that describes the glyphs in the font in the TrueType outline format. Information regarding the rasterizer (scaler) refers to the TrueType rasterizer. ',
+    link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/glyf'
+  },
   subset: {
     text: 'Subset',
     active: false,
     description: 'Font subset based on Google font unicode range',
     link: ''
   },
-  glyph: {
-    text: 'Glyph',
-    active: false,
-    description: 'This table contains information that describes the glyphs in the font in the TrueType outline format. Information regarding the rasterizer (scaler) refers to the TrueType rasterizer. ',
-    link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/glyf'
-  }
 };
 
 interface IGlyph {
@@ -374,6 +374,12 @@ function App() {
                   </ol>
                   {createPagination(subsetRangeToShow, rangePage, rangePerPage, setRangePage)}
                 </>
+              ): ''}
+
+              {tab.glyph.active && !curGlyph ? (
+                <div style={{ textAlign: 'center', padding: '50px 0', color: '#999' }}>
+                  Please select a code form CMAP
+                </div>
               ): ''}
 
               {tab.glyph.active && curGlyph ? (
