@@ -151,6 +151,7 @@ main {
 
 .content-wrapper {
   overflow: auto;
+  flex: 1
 }
 
 .unicode-list {
@@ -177,6 +178,11 @@ main {
   justify-content: center;
   background-color: #fff;
   display: flex;
+}
+
+.unicode-list li:hover {
+  background-color: rgb(240, 247, 255);
+  cursor: pointer;
 }
 
 .unicode-cover {
@@ -351,4 +357,43 @@ main {
   background-color: #eee;
   padding: 0 5px;
   margin-right: 5px;
+}
+
+.glyph-info {
+  display: flex;
+  height: 100%;
+}
+
+.glyph-sidebar {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  list-style: none;
+  padding: 20px 20px;
+  margin: 0;
+  font-weight: 500;
+  border-right: 1px solid #eee;
+}
+
+.glyph-sidebar span {
+  display: inline-block;
+  width: 150px;
+  text-align: right;
+  margin-right: 5px;
+  line-height: 2;
+  font-weight: 200;
+}
+
+.glyph-canvas {
+  /* background-color: #eee; */
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glyph-canvas canvas {
+  /* background-color: #eee; */
+  height: 80%;
+  width: auto;
 }
