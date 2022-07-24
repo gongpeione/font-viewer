@@ -394,6 +394,6 @@ main {
 
 .glyph-canvas canvas {
   /* background-color: #eee; */
-  height: 80%;
+  height: 100%;
   width: auto;
 }

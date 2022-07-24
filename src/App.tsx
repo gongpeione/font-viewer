@@ -21,6 +21,18 @@ const defaultTab = {
     link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/os2',
     description: 'The OS/2 table consists of a set of metrics and other data that are required in OpenType fonts.'
   },
+  head: {
+    text: 'head',
+    active: false,
+    link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/head',
+    description: 'This table gives global information about the font. The bounding box values should be computed using only glyphs that have contours. Glyphs with no contours should be ignored for the purposes of these calculations.'
+  },
+  hhea: {
+    text: 'hhea',
+    active: false,
+    link: 'https://docs.microsoft.com/en-us/typography/opentype/spec/hhea',
+    description: 'This table contains information for horizontal layout. The values in the minRightSidebearing, minLeftSideBearing and xMaxExtent should be computed using only glyphs that have contours. Glyphs with no contours should be ignored for the purposes of these calculations. All reserved areas must be set to 0.'
+  },
   subset: {
     text: 'Subset',
     active: false,
@@ -176,11 +188,11 @@ function App() {
 
     function hline(text: string, yunits: number) {
       const ypx = glyphBaseline - yunits * glyphScale;
-      ctx!.font = '30px sans-serif';
+      ctx!.font = '16px sans-serif';
       ctx!.fillStyle = '#000';
-      ctx!.fillText(text, 2, ypx - 20);
-      ctx!.fillStyle = '#000';
-      ctx!.fillRect(80, ypx, w, 1);
+      ctx!.fillText(text, 2, ypx + 5);
+      ctx!.fillStyle = '#f00';
+      ctx!.fillRect(130, ypx, w, 1);
     }
 
     ctx!.clearRect(0, 0, w, h);
@@ -191,8 +203,8 @@ function App() {
     hline('yMin', head.yMin);
     hline('Ascender', hhea.ascender);
     hline('Descender', hhea.descender);
-    hline('Typo Ascender', os2.sTypoAscender);
-    hline('Typo Descender', os2.sTypoDescender);
+    hline('TypoAscender', os2.sTypoAscender);
+    hline('TypoDescender', os2.sTypoDescender);
   }, [curGlyph, head, hhea, os2]);
 
   // useEffect(() => {
@@ -307,6 +319,32 @@ function App() {
                       <div className="os2-cover">
                         <span>{c}</span>
                         <span>{os2[c]}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              ): ''}
+
+              {tab.head.active ? (
+                <ol className='os2-list'>
+                  {Object.keys(head).map(c => (
+                    <li>
+                      <div className="os2-cover">
+                        <span>{c}</span>
+                        <span>{head[c].getTime ? head[c].getTime() : head[c]}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              ): ''}
+
+              {tab.hhea.active ? (
+                <ol className='os2-list'>
+                  {Object.keys(hhea).map(c => (
+                    <li>
+                      <div className="os2-cover">
+                        <span>{c}</span>
+                        <span>{hhea[c].toString()}</span>
                       </div>
                     </li>
                   ))}
