@@ -262,7 +262,7 @@ function App() {
                             {r.map(d => {
                               return (
                                 <div className="subset">
-                                  <span className='subset-code'>{d}</span>
+                                  <span className='subset-code'>{d.toUpperCase()}</span>
                                   <span style={{ fontFamily: `'${fontNameObj.fontFamily}'` }}>{createRangeList(d)}</span>
                                 </div>
                               )
