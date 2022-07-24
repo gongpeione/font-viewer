@@ -1,4 +1,4 @@
-import { FormEvent, FormEventHandler, useEffect, useMemo, useState } from 'react';
+import { FormEvent, FormEventHandler, useCallback, useEffect, useMemo, useState } from 'react';
 import { FileUploader } from "react-drag-drop-files";
 // @ts-ignore
 import font from 'fonteditor-core/lib/ttf/font';
@@ -7,7 +7,7 @@ import './App.css';
 import range from './font-range.json';
 // import r from './r.ttf';
 
-const fileTypes = ["ttf"];
+const fileTypes = ['ttf', 'otf'];
 const defaultTab = {
   cmap: {
     text: 'cmap',
@@ -43,11 +43,18 @@ function App() {
   const [cmapPage, setCmapPage] = useState(0);
   const [searchCMAP, setSearchCMAP] = useState<string | number>('');
 
+  const [rangePerPage, setRangePerPage] = useState(10);
+  const [rangePage, setRangePage] = useState(0);
+
   const handleChange = async (file: File) => {
     const fontBuffer = await file.arrayBuffer();
     const url = URL.createObjectURL(file);
+    const suffix = (() => {
+      const tmp = file.name.split('.');
+      return tmp[tmp.length - 1];
+    })();
     let ttf = font.create(fontBuffer, {
-      type: 'ttf'
+      type: suffix || 'ttf'
     });
 
     // setFile(file);
@@ -111,6 +118,18 @@ function App() {
     })
   }, [cmap, searchCMAP]);
 
+  const subsetRangeToShow = useMemo(() => {
+    return range.filter(c => {
+      return true;
+      // if (!searchCMAP) return true;
+      // if (typeof searchCMAP === 'number') {
+      //   return +c === searchCMAP || +cmap[c] === searchCMAP;
+      // } else {
+      //   return searchCMAP.includes(String.fromCharCode(+c));
+      // }
+    })
+  }, [cmap, searchCMAP]);
+
   // useEffect(() => {
   //   const css = `
   //     @font-face {
@@ -129,12 +148,37 @@ function App() {
     setCmapPage(0);
   }, [searchCMAP]);
 
+  const createPagination = useCallback((list = [] as unknown[], curPage = 0, perPage = 20, setPage: React.Dispatch<React.SetStateAction<number>>) => {
+    return list.length > perPage ? <ol className="pagination">
+      <li onClick={() => setPage(0)}>First Page</li>
+      <li onClick={() => curPage > 0 && setPage(curPage - 1)}>Prev</li>
+      <li className='curpage'>{curPage + 1}/{Math.floor(list.length / perPage) + 1}</li>
+      <li onClick={() => curPage < Math.floor(list.length / perPage) && setPage(curPage + 1)}>Next</li>
+      <li onClick={() => setPage(Math.floor(list.length / perPage))}>Last Page</li>
+    </ol> : ''
+  }, []);
+
+  const createRangeList = (unicodeRange: string) => {
+    const range = /U\+(\w+)(\-(\w+))?/.exec(unicodeRange);
+    if (!range) {
+      return '';
+    }
+
+    const start = +`0x${range[1]}`;
+    const end = range[3] ? +`0x${range[3]}` : start;
+
+    return Array.from({ length: end - start + 1 }, (_, index) => {
+      const code = start + index;
+      return <span>{String.fromCharCode(code)}</span>;
+    });
+  }
+
   return (
     <div className="App">
       {!ttf ? (
         <div className="upload-wrapper">
           <FileUploader classes="upload" handleChange={handleChange} name="file" types={fileTypes}>
-            Drag and drop .ttf
+            Drag and drop font file (.ttf/.otf)
           </FileUploader>
         </div>
       ) : ''}
@@ -183,13 +227,14 @@ function App() {
                       </li>
                     ))}
                   </ol>
-                  {cmapListToShow.length > cmapPerPage ? <ol className="pagination">
+                  {createPagination(cmapListToShow, cmapPage, cmapPerPage, setCmapPage)}
+                  {/* {cmapListToShow.length > cmapPerPage ? <ol className="pagination">
                     <li onClick={() => setCmapPage(0)}>First Page</li>
                     <li onClick={() => cmapPage > 0 && setCmapPage(cmapPage - 1)}>Prev</li>
                     <li className='curpage'>{cmapPage + 1}/{Math.floor(cmapListToShow.length / cmapPerPage) + 1}</li>
                     <li onClick={() => cmapPage < Math.floor(cmapListToShow.length / cmapPerPage) && setCmapPage(cmapPage + 1)}>Next</li>
                     <li onClick={() => setCmapPage(Math.floor(cmapListToShow.length / cmapPerPage))}>Last Page</li>
-                  </ol> : ''}
+                  </ol> : ''} */}
                 </>
               ): ''}
 
@@ -207,19 +252,28 @@ function App() {
               ): ''}
 
               {tab.subset.active ? (
-                <ol className='subset-list'>
-                  {range.map((r, index) => (
-                    <li>
-                      <div className="subset-title">
-                        <div className="subset-index">{index}</div>
-                        <span className='subset-range'>{r.map(d => <span>{d}</span>)}</span>
-                      </div>
-                      <div className="subset-glyph">
-
-                      </div>
-                    </li>
-                  ))}
-                </ol>
+                <>
+                  <ol className='subset-list'>
+                    {subsetRangeToShow.slice(rangePage * rangePerPage, (rangePage + 1) * rangePerPage).map((r, index) => (
+                      <li>
+                        <div className="subset-title">
+                          <div className="subset-index">{index + rangePage * rangePerPage}</div>
+                          <div className='subset-range'>
+                            {r.map(d => {
+                              return (
+                                <div className="subset">
+                                  <span className='subset-code'>{d}</span>
+                                  <span style={{ fontFamily: `'${fontNameObj.fontFamily}'` }}>{createRangeList(d)}</span>
+                                </div>
+                              )
+                            })}
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                  {createPagination(subsetRangeToShow, rangePage, rangePerPage, setRangePage)}
+                </>
               ): ''}
             </div>
           </div>
