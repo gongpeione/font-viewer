@@ -153,6 +153,26 @@ async function drawGlyph(
     // ctx.fill('evenodd');
     ctx.closePath();
   }
+
+  ctx.fillStyle = '#333';
+  ctx.fill();
+  ctx.closePath();
+
+  // draw point
+  for (let contourIndex = 0; contourIndex < contours.length; contourIndex++) {
+    const contour = contours[contourIndex];
+    for (let i = 0; i < contour.length; ++i) {
+      const curr = contour[i];
+
+      ctx.fillStyle = '#f006';
+      if (!curr.onCurve) {
+        ctx.fillStyle = '#00f6';
+      }
+
+      ctx.fillRect(curr.x * scale + x - 5, curr.y * -scale + y - 5, 10, 10);
+      await new Promise(r => setTimeout(r, 1e2));
+    }
+  }
 }
 
 function App() {
