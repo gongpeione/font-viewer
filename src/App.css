@@ -59,7 +59,9 @@ main {
 }
 
 .tab li:hover {
-  font-weight: 500;
+  background-color: rgb(240, 247, 255);
+  color: rgb(33, 103, 255);
+  /* font-weight: 500; */
 }
 
 .tab li:hover::after {
@@ -77,8 +79,11 @@ main {
 }
 
 .tab li.active {
+  background-color: rgb(240, 247, 255);
   color: rgb(33, 103, 255);
-  font-weight: 500;
+  /* background-color: rgb(219, 235, 255); */
+  border-color: rgb(240, 247, 255);
+  /* font-weight: 500; */
 }
 
 .tab-icon {
@@ -369,10 +374,13 @@ main {
   justify-content: center;
   flex-direction: column;
   list-style: none;
-  padding: 20px 20px;
+  padding: 10px 10px;
   margin: 0;
   font-weight: 500;
   border-right: 1px solid #eee;
+  flex: 1 0 240px;
+  max-width: 280px;
+  font-size: 12px;
 }
 
 .glyph-sidebar span {
@@ -390,10 +398,19 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .glyph-canvas canvas {
   /* background-color: #eee; */
   height: 100%;
   width: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.glyph-canvas .glyph-canvas-el {
+  transform: translate(-50%, -50%) matrix(1, 0, 0, -1, 0, 0);
 }
