@@ -414,3 +414,26 @@ main {
 .glyph-canvas .glyph-canvas-el {
   /* transform: translate(-50%, -50%) matrix(1, 0, 0, -1, 0, 0); */
 }
+
+.github {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: .5;
+}
+
+.github:hover {
+  transition: opacity .2s ease-in-out;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.github svg {
+  width: 30px;
+  height: 30px;
+}
