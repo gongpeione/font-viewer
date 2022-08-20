@@ -283,7 +283,7 @@ function App() {
       bgCtx!.font = "16px sans-serif";
       bgCtx!.fillStyle = "#000";
       bgCtx!.fillText(text, 2, ypx + 5);
-      bgCtx!.fillStyle = "#f00";
+      bgCtx!.fillStyle = "#ccc";
       bgCtx!.fillRect(130, ypx, w, 1);
     }
 
