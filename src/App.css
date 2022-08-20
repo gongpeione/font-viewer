@@ -412,5 +412,5 @@ main {
 }
 
 .glyph-canvas .glyph-canvas-el {
-  transform: translate(-50%, -50%) matrix(1, 0, 0, -1, 0, 0);
+  /* transform: translate(-50%, -50%) matrix(1, 0, 0, -1, 0, 0); */
 }

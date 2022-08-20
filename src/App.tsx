@@ -149,8 +149,8 @@ async function drawGlyph(
     }
 
     ctx.stroke();
-    ctx.fillStyle = '#000';
-    ctx.fill('evenodd');
+    // ctx.fillStyle = '#000';
+    // ctx.fill('evenodd');
     ctx.closePath();
   }
 }
@@ -314,7 +314,7 @@ function App() {
     ctx.lineWidth = 1.5;
     console.log({contours: glyph?.contours!, x: 100, glyphBaseline, glyphScale});
     drawGlyph(ctx, glyph?.contours!, 300, glyphBaseline, glyphScale);
-    drawGlyph(ctx, glyph?.contours!, 300);
+    // drawGlyph(ctx, glyph?.contours!, 300);
 
     console.log(curGlyph);
     // const glyphWidth = glyph.advanceWidth * glyphScale;
