@@ -159,7 +159,7 @@ function App() {
   // const [file, setFile] = useState<File | null>(null);
   const [ttf, setTTF] = useState<any>(null);
   const [tab, setTab] = useState(defaultTab);
-  const [cmapPerPage, setCmapPerPage] = useState(50);
+  const [cmapPerPage, setCmapPerPage] = useState(100);
   const [cmapPage, setCmapPage] = useState(0);
   const [searchCMAP, setSearchCMAP] = useState<string | number>("");
 
