@@ -145,6 +145,14 @@ async function drawGlyph(
         ctx.quadraticCurveTo((curr.x * scale) + x, (curr.y * -scale) + y, (next2.x * scale) + x, (next2.y * -scale) + y);
       }
       ctx.stroke();
+
+      ctx.fillStyle = '#f006';
+      if (!curr.onCurve) {
+        ctx.fillStyle = '#00f6';
+      }
+
+      ctx.fillRect(curr.x * scale + x - 5, curr.y * -scale + y - 5, 10, 10);
+
       await new Promise(r => setTimeout(r, 1e2));
     }
 
@@ -159,20 +167,20 @@ async function drawGlyph(
   ctx.closePath();
 
   // draw point
-  for (let contourIndex = 0; contourIndex < contours.length; contourIndex++) {
-    const contour = contours[contourIndex];
-    for (let i = 0; i < contour.length; ++i) {
-      const curr = contour[i];
+  // for (let contourIndex = 0; contourIndex < contours.length; contourIndex++) {
+  //   const contour = contours[contourIndex];
+  //   for (let i = 0; i < contour.length; ++i) {
+  //     const curr = contour[i];
 
-      ctx.fillStyle = '#f006';
-      if (!curr.onCurve) {
-        ctx.fillStyle = '#00f6';
-      }
+  //     ctx.fillStyle = '#f006';
+  //     if (!curr.onCurve) {
+  //       ctx.fillStyle = '#00f6';
+  //     }
 
-      ctx.fillRect(curr.x * scale + x - 5, curr.y * -scale + y - 5, 10, 10);
-      await new Promise(r => setTimeout(r, 1e2));
-    }
-  }
+  //     ctx.fillRect(curr.x * scale + x - 5, curr.y * -scale + y - 5, 10, 10);
+  //     await new Promise(r => setTimeout(r, 1e2));
+  //   }
+  // }
 }
 
 function App() {
