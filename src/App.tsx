@@ -278,11 +278,11 @@ function App() {
     const glyphSize = glyphScale * font.unitsPerEm;
     const glyphBaseline = margin + (glyphH * head.yMax) / maxHeight;
 
-    function hline(text: string, yunits: number) {
+    function hline(text: string, yunits: number, textOffset = 0) {
       const ypx = glyphBaseline - yunits * glyphScale;
       bgCtx!.font = "16px sans-serif";
       bgCtx!.fillStyle = "#000";
-      bgCtx!.fillText(text, 2, ypx + 5);
+      bgCtx!.fillText(text, 2, ypx + 5 + textOffset);
       bgCtx!.fillStyle = "#ccc";
       bgCtx!.fillRect(130, ypx, w, 1);
     }
@@ -294,8 +294,8 @@ function App() {
     hline("Baseline", 0);
     hline("yMax", head.yMax);
     hline("yMin", head.yMin);
-    hline("Ascender", hhea.ascender);
-    hline("Descender", hhea.descender);
+    hline("Ascender", hhea.ascent, hhea.ascent === os2.sTypoAscender ? 20 : 0);
+    hline("Descender", hhea.descent, hhea.descent === os2.sTypoDescender ? 20 : 0);
     hline("TypoAscender", os2.sTypoAscender);
     hline("TypoDescender", os2.sTypoDescender);
 
